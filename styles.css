@@ -245,7 +245,7 @@ section{padding:clamp(3.4rem,7vw,6rem) 0}
 .site-footer a:hover{color:var(--gold)}
 .foot-contact a{display:flex;gap:.55rem;align-items:center}
 .foot-contact svg{width:17px;height:17px;color:var(--gold);flex:none}
-.foot-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:2.6rem;padding-top:1.4rem;display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center;font-size:.84rem;color:#9a917f}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:2.6rem;padding-top:1.4rem;display:flex;flex-direction:column;gap:.9rem;justify-content:center;align-items:center;text-align:center;font-size:.84rem;color:#9a917f}
 .foot-bottom a{color:#9a917f}
 .foot-bottom a:hover{color:var(--gold)}
 .built-by{display:flex;align-items:center;gap:.5rem}
@@ -357,3 +357,50 @@ section{padding:clamp(3.4rem,7vw,6rem) 0}
 .featband--alt .featband__body{background:var(--paper)}
 .featband__body .check-list{margin-bottom:0}
 @media (max-width:820px){.featband{grid-template-columns:1fr}.featband__media{min-height:300px}}
+
+/* ---------- listings / search page ---------- */
+.search-card{
+  background:linear-gradient(135deg,#0b0b0b 0%,#16263f 115%);
+  color:#f1ece3;border-radius:18px;padding:clamp(2.2rem,5vw,3.4rem);text-align:center;
+  border-top:3px solid var(--gold);box-shadow:var(--shadow);
+}
+.search-card .eyebrow{color:var(--gold)}
+.search-card .eyebrow::before{background:var(--gold)}
+.search-card h2{color:#fff;margin-bottom:.6rem}
+.search-card p{color:#cfc6b6;max-width:52ch;margin:0 auto 1.8rem}
+.search-card .btn svg{width:18px;height:18px}
+.qcities{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin-top:2rem}
+.qcity{
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:.85rem .6rem;border:1px solid var(--line);border-radius:10px;
+  background:var(--paper);font-size:.92rem;font-weight:500;color:var(--ink);
+  transition:background .2s,color .2s,border-color .2s,transform .2s;
+}
+.qcity:hover{background:var(--navy);color:#fff;border-color:var(--navy);transform:translateY(-2px)}
+.qnote{text-align:center;margin-top:1.6rem;color:var(--char-60);font-size:.95rem}
+.qnote a{color:var(--gold-deep);font-weight:600}
+.qnote a:hover{color:var(--ink)}
+@media (max-width:860px){.qcities{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:520px){.qcities{grid-template-columns:1fr 1fr}}
+
+/* ---------- footer social icons ---------- */
+.foot-social{display:flex;gap:.7rem;margin-top:1.1rem}
+.foot-social a{
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.18);color:#b4ac9d;transition:all .2s;
+}
+.foot-social a:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.foot-social svg{width:18px;height:18px}
+
+/* ---------- possession-day panel ---------- */
+.poss-panel{
+  background:var(--paper);border:1px solid var(--line);border-radius:18px;
+  padding:clamp(2.6rem,6vw,4.4rem);text-align:center;max-width:760px;margin:0 auto;
+  box-shadow:var(--shadow-sm);border-top:3px solid var(--gold);
+}
+.poss-ic{width:64px;height:64px;border-radius:50%;background:rgba(200,167,106,.14);color:var(--gold-deep);display:grid;place-items:center;margin:0 auto 1.4rem}
+.poss-ic svg{width:32px;height:32px}
+.poss-panel h2{margin-bottom:.6rem}
+.poss-panel p{color:var(--char-60);max-width:52ch;margin:0 auto 1rem}
+.poss-sub{font-style:italic;color:var(--char)!important}
+.poss-panel .btn{margin-top:1.2rem}
