@@ -103,6 +103,22 @@ img{max-width:100%;display:block}
 .nav-links a:hover{color:var(--ink)}
 .nav-links a.active{color:var(--ink)}
 .nav-links a.active::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--gold)}
+/* dropdowns */
+.nav-links .has-sub{position:relative}
+.nav-links .has-sub > a{display:inline-flex;align-items:center;gap:.35rem}
+.caret{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translateY(-1px);transition:transform .2s;opacity:.7}
+.nav-links .sub{
+  list-style:none;margin:0;padding:.5rem 0;position:absolute;top:calc(100% + 14px);left:-14px;min-width:210px;
+  background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow-sm);
+  opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .18s,transform .18s,visibility .18s;z-index:80;
+}
+.nav-links .sub::before{content:"";position:absolute;top:-14px;left:0;right:0;height:14px}
+.nav-links .sub li{width:100%}
+.nav-links .sub a{display:block;padding:.6rem 1.1rem;font-size:.92rem;white-space:nowrap}
+.nav-links .sub a:hover{background:rgba(200,167,106,.12);color:var(--ink)}
+.nav-links .sub a.active::after{display:none}
+.nav-links .has-sub:hover > .sub,.nav-links .has-sub:focus-within > .sub{opacity:1;visibility:visible;transform:translateY(0)}
+.nav-links .has-sub:hover > a .caret{transform:rotate(45deg) translateY(1px) scale(1.05)}
 .nav-cta{display:flex;align-items:center;gap:.6rem;flex:none}
 .nav-cta .btn{padding:.7rem 1.05rem;font-size:.9rem;white-space:nowrap}
 .nav-toggle{display:none;background:none;border:0;cursor:pointer;padding:8px}
@@ -117,6 +133,14 @@ img{max-width:100%;display:block}
     background:var(--bone);border-bottom:1px solid var(--line);padding:1.2rem 24px 1.6rem;gap:1.1rem;align-items:flex-start;z-index:70;
   }
   .nav-links.open a{font-size:1.05rem}
+  .nav-links .has-sub{width:100%}
+  .nav-links .caret{display:none}
+  .nav-links .sub{
+    position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;
+    background:transparent;padding:.4rem 0 0 .9rem;min-width:0;
+  }
+  .nav-links .sub a{font-size:.95rem;padding:.5rem 0;color:var(--char-60)}
+  .nav-links .sub::before{display:none}
 }
 @media (max-width:480px){
   .nav .wa-txt{display:none}
@@ -206,9 +230,11 @@ section{padding:clamp(3.4rem,7vw,6rem) 0}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;counter-reset:step}
 .step{position:relative;padding-top:4.6rem}
 /* connecting line runs through the centre of the number circles */
-.step::after{content:"";position:absolute;top:23px;left:calc(50% + 28px);right:calc(-50% + 28px);height:1.5px;background:var(--gold);opacity:.4}
+/* line runs from just right of this circle (≈56px) across the gap to the next circle */
+.step::after{content:"";position:absolute;top:23px;left:56px;width:calc(100% + 1.3rem - 56px);height:1.5px;background:var(--gold);opacity:.35;z-index:0}
 .step:last-child::after{display:none}
-.step::before{counter-increment:step;content:counter(step);position:absolute;top:0;left:0;font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--gold-deep);width:46px;height:46px;border:1.5px solid var(--gold);border-radius:50%;display:grid;place-items:center;background:var(--navy);z-index:1}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:0;left:0;font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--gold-deep);width:46px;height:46px;border:1.5px solid var(--gold);border-radius:50%;display:grid;place-items:center;background:var(--navy);z-index:1;transition:background .25s,color .25s,transform .25s}
+.step:hover::before{background:var(--gold);color:var(--navy);transform:scale(1.08)}
 .step h3{font-size:1.16rem;margin-bottom:.35rem}
 .step p{font-size:.95rem;color:var(--char-60);margin:0}
 @media (max-width:860px){.step::after{display:none}}
@@ -404,3 +430,33 @@ section{padding:clamp(3.4rem,7vw,6rem) 0}
 .poss-panel p{color:var(--char-60);max-width:52ch;margin:0 auto 1rem}
 .poss-sub{font-style:italic;color:var(--char)!important}
 .poss-panel .btn{margin-top:1.2rem}
+
+/* ---------- sold listings showcase ---------- */
+.sold-section{padding-bottom:0}
+.sold-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.sold-card{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .22s,box-shadow .22s,border-color .22s}
+.sold-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#ccc2a8}
+.sold-img{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--bone-2)}
+.sold-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.sold-card:hover .sold-img img{transform:scale(1.04)}
+.sold-flag{position:absolute;top:.9rem;left:.9rem;background:var(--ink);color:var(--gold);font-family:"Montserrat",sans-serif;font-weight:600;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:.35rem .8rem;border-radius:999px}
+.sold-card figcaption{padding:1.1rem 1.2rem 1.3rem}
+.sold-area{font-family:"Montserrat",sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep)}
+.sold-card figcaption p{margin:.35rem 0 0;font-size:.95rem;color:var(--char-60);line-height:1.5}
+@media (max-width:860px){.sold-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:540px){.sold-grid{grid-template-columns:1fr}}
+
+/* ---------- possession day gallery ---------- */
+.poss-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.poss-card{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .22s,box-shadow .22s}
+.poss-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.poss-img{aspect-ratio:4/5;overflow:hidden;background:var(--bone-2)}
+.poss-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.poss-card:hover .poss-img img{transform:scale(1.04)}
+.poss-card figcaption{padding:1.1rem 1.2rem 1.3rem}
+.poss-card figcaption b{display:block;font-family:"Montserrat",sans-serif;font-size:1rem;color:var(--ink);margin-bottom:.25rem}
+.poss-card figcaption span{font-size:.92rem;color:var(--char-60)}
+.poss-cta{text-align:center;margin-top:2.6rem;background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:18px;padding:2.4rem}
+.poss-cta p{max-width:48ch;margin:0 auto 1.2rem;color:var(--char-60)}
+@media (max-width:860px){.poss-gallery{grid-template-columns:1fr 1fr}}
+@media (max-width:540px){.poss-gallery{grid-template-columns:1fr}}
