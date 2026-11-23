@@ -156,8 +156,10 @@ img{max-width:100%;display:block}
 
 /* ---------- trust strip ---------- */
 .trust{background:var(--ink);color:#ece7de;border-bottom:2px solid var(--gold)}
-.trust .wrap{display:flex;flex-wrap:wrap;gap:1.4rem 2.6rem;align-items:center;justify-content:space-between;padding-top:1.3rem;padding-bottom:1.3rem}
-.trust span{font-size:.95rem;display:inline-flex;align-items:center;gap:.55rem;color:#d7cfc0}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem 2rem;align-items:center;padding-top:1.3rem;padding-bottom:1.3rem}
+.trust span{font-size:.92rem;display:inline-flex;align-items:center;gap:.55rem;color:#d7cfc0}
+@media (max-width:860px){.trust .wrap{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.trust .wrap{grid-template-columns:1fr}}
 .trust svg{width:18px;height:18px;color:var(--gold);flex:none}
 
 /* ---------- sections ---------- */
@@ -202,10 +204,14 @@ section{padding:clamp(3.4rem,7vw,6rem) 0}
 
 /* steps */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.3rem;counter-reset:step}
-.step{position:relative;padding-top:2.6rem}
-.step::before{counter-increment:step;content:counter(step);position:absolute;top:0;left:0;font-family:"Playfair Display",serif;font-size:1.5rem;color:var(--gold-deep);width:46px;height:46px;border:1.5px solid var(--gold);border-radius:50%;display:grid;place-items:center}
+.step{position:relative;padding-top:4.6rem}
+/* connecting line runs through the centre of the number circles */
+.step::after{content:"";position:absolute;top:23px;left:calc(50% + 28px);right:calc(-50% + 28px);height:1.5px;background:var(--gold);opacity:.4}
+.step:last-child::after{display:none}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:0;left:0;font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--gold-deep);width:46px;height:46px;border:1.5px solid var(--gold);border-radius:50%;display:grid;place-items:center;background:var(--navy);z-index:1}
 .step h3{font-size:1.16rem;margin-bottom:.35rem}
 .step p{font-size:.95rem;color:var(--char-60);margin:0}
+@media (max-width:860px){.step::after{display:none}}
 @media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
 @media (max-width:480px){.steps{grid-template-columns:1fr}}
 
