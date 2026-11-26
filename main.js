@@ -39,7 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // contact / evaluation form -> opens WhatsApp or mail with the details, since there's no backend
+  // contact / evaluation forms -> send to Formspree (email) + offer WhatsApp as instant option
+  var FORMSPREE = 'https://formspree.io/f/xjywjjdl';
   document.querySelectorAll('form[data-lead]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -51,21 +52,51 @@ document.addEventListener('DOMContentLoaded', function () {
       var msg = (data.get('message') || '').toString().trim();
       var addr = (data.get('address') || '').toString().trim();
 
-      var lines = ['Hi Tarak, I would like to connect about real estate.'];
-      lines.push('');
+      // give Formspree tidy fields + a useful subject line
+      data.set('_subject', 'New website lead: ' + kind);
+      if (phone) data.set('_replyto', email || phone);
+
+      var btn = form.querySelector('button[type="submit"]');
+      var ok = form.querySelector('.msg-ok');
+      var origBtnText = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.innerHTML = 'Sending…'; }
+
+      // build the WhatsApp fallback link
+      var lines = ['Hi Tarak, I would like to connect about real estate.', ''];
       if (name) lines.push('Name: ' + name);
       if (phone) lines.push('Phone: ' + phone);
       if (email) lines.push('Email: ' + email);
       if (kind) lines.push('Interested in: ' + kind);
       if (addr) lines.push('Property/Address: ' + addr);
       if (msg) lines.push('Message: ' + msg);
+      var wa = 'https://wa.me/13063710190?text=' + encodeURIComponent(lines.join('\n'));
 
-      var text = encodeURIComponent(lines.join('\n'));
-      var wa = 'https://wa.me/13063710190?text=' + text;
-
-      var ok = form.querySelector('.msg-ok');
-      if (ok) ok.classList.add('show');
-      window.open(wa, '_blank');
+      fetch(FORMSPREE, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (res.ok) {
+          form.reset();
+          if (ok) {
+            ok.classList.add('show');
+            ok.innerHTML = 'Thanks ' + (name ? name.split(' ')[0] : '') +
+              '! Your message has been sent — I\u2019ll be in touch soon. ' +
+              'Prefer to chat now? <a href="' + wa + '" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Message me on WhatsApp</a>.';
+          }
+        } else {
+          throw new Error('Formspree error');
+        }
+      }).catch(function () {
+        // if the email send fails, fall back to WhatsApp so the lead isn't lost
+        if (ok) {
+          ok.classList.add('show');
+          ok.innerHTML = 'Opening WhatsApp so you can send your message directly…';
+        }
+        window.open(wa, '_blank');
+      }).finally(function () {
+        if (btn) { btn.disabled = false; btn.innerHTML = origBtnText; }
+      });
     });
   });
 });
