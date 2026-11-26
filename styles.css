@@ -183,9 +183,9 @@ img{max-width:100%;display:block}
 
 /* ---------- trust strip ---------- */
 .trust{background:var(--ink);color:#ece7de;border-bottom:2px solid var(--gold)}
-.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem 2rem;align-items:center;padding-top:1.3rem;padding-bottom:1.3rem}
-.trust span{font-size:.92rem;display:inline-flex;align-items:center;gap:.55rem;color:#d7cfc0}
-@media (max-width:860px){.trust .wrap{grid-template-columns:1fr 1fr}}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6rem 2rem;align-items:center;justify-items:center;padding-top:1.5rem;padding-bottom:1.5rem}
+.trust span{font-size:.9rem;line-height:1.35;display:flex;align-items:center;gap:.6rem;color:#d7cfc0;text-align:left}
+@media (max-width:860px){.trust .wrap{grid-template-columns:1fr 1fr;justify-items:start}}
 @media (max-width:520px){.trust .wrap{grid-template-columns:1fr}}
 .trust svg{width:18px;height:18px;color:var(--gold);flex:none}
 
