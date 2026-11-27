@@ -450,7 +450,7 @@ section{padding:clamp(3.4rem,7vw,6rem) 0}
 @media (max-width:540px){.sold-grid{grid-template-columns:1fr}}
 
 /* ---------- possession day gallery ---------- */
-.poss-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.poss-gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;max-width:900px;margin:0 auto}
 .poss-card{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .22s,box-shadow .22s}
 .poss-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
 .poss-img{aspect-ratio:4/5;overflow:hidden;background:var(--bone-2)}
